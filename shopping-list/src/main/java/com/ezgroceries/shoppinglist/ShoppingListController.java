@@ -17,7 +17,7 @@ public class ShoppingListController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED) // 201
     @RequestMapping(value = "/shopping-lists", produces = "application/json")
-    public ShoppingListResource post(@RequestBody ShoppingListCreationRequest requestBody) throws JsonProcessingException {
+    public ShoppingListResource post(@RequestBody ShoppingListCreationRequest requestBody) {
 
         //ObjectMapper objectMapper = new ObjectMapper();
         //ShoppingListCreationRequest request = objectMapper.readValue(requestBody, ShoppingListCreationRequest.class);
@@ -26,13 +26,20 @@ public class ShoppingListController {
         return new ShoppingListResource(request.getName());
     }
 
-/*    @ResponseStatus(HttpStatus.CREATED) // 201
-    @PostMapping// (value = "/shopping-lists/{id}/cocktails", produces = "application/json")
-    public ShoppingListResource addCocktails(@RequestBody String requestBody) throws JsonProcessingException {
+    @PostMapping(value = "/shopping-lists/{id}/cocktails", produces = "application/json")
+    public List<String> addCopcktails(@PathVariable("id") String id, @RequestBody List<AddCocktailsRequest> requestBody) {
+        List<AddCocktailsRequest> request = requestBody;
+        List<String> cocktailIdList = new ArrayList<String>();
+        List<String> response = new ArrayList<String>();
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        AddCocktailsRequest request = objectMapper.readValue(requestBody, AddCocktailsRequest.class);
+        // for each cocktail in the request, add it to the shoppingList with id "{id}"
+        requestBody.forEach((cocktailId)->response.add(cocktailId.toString()));
+     /*   for (String cocktailId : requestBody.getCocktailId()) {
+            // TODO: add cocktail to an _existing_ shoppinglist with id = {id}
+            // then, add the cocktailId to the response-object
+            response.add(cocktailId);
+        }*/
 
-        return new ShoppingListResource(request.getName());
-    }*/
+        return response;
+    }
 }

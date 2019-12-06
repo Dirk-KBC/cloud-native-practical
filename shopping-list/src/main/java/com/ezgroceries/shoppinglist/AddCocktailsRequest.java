@@ -8,19 +8,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({
-        "cocktailIdList",
-})
+
 public class AddCocktailsRequest {
 
-    private List<String> cocktailIdList = new ArrayList<>();
+    private String cocktailId = new String();
 
-    public List<String> getCocktailIdList() {
-        return cocktailIdList;
+    public AddCocktailsRequest() {
     }
 
-    public void setCocktailIdList(List<String> cocktailIdList) {
-        this.cocktailIdList = cocktailIdList;
+    public String getCocktailId() {
+        return cocktailId;
+    }
+
+    public void setCocktailId(String cocktailId) {
+        this.cocktailId = cocktailId;
     }
 
 }
