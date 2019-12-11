@@ -27,7 +27,7 @@ public class ShoppingListController {
     }
 
     @PostMapping(value = "/shopping-lists/{id}/cocktails", produces = "application/json")
-    public List<String> addCopcktails(@PathVariable("id") String id, @RequestBody List<AddCocktailsRequest> requestBody) {
+    public List<String> addCocktails(@PathVariable("id") String id, @RequestBody List<AddCocktailsRequest> requestBody) {
         List<AddCocktailsRequest> request = requestBody;
         List<String> cocktailIdList = new ArrayList<String>();
         List<String> response = new ArrayList<String>();
