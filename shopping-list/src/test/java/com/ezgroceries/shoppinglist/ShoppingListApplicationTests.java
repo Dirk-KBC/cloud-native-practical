@@ -43,7 +43,7 @@ class ShoppingListApplicationTests {
     }
 
     @Test
-    //@Disabled
+    @Disabled
     @DisplayName("Test Controller - add cocktails")
     public void testPost() throws Exception {
         // To be tested:
@@ -60,6 +60,50 @@ class ShoppingListApplicationTests {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.uuid").exists());
     }
 
+    @Test
+    @Disabled
+    @DisplayName("Test Controller - Create a shopping list")
+    public void testCreateShoppingList() throws Exception {
+        // To be tested:
+        // * Response status
+        // * Content type
+        // * JSON response body attributes
+        String shoppingListName = "Just a test";
+        mvc.perform( MockMvcRequestBuilders
+                .post("/shopping-lists")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(new ShoppingListCreationRequest(shoppingListName)))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.shoppingListName").value(shoppingListName))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.uuid").exists());
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("Test Controller - get a shopping list")
+    public void testGetShoppingList() throws Exception {
+        // To be tested:
+        // * Response status
+        // * Content type
+        // * JSON response body attributes
+        String shoppingListName = "Just a test";
+        mvc.perform( MockMvcRequestBuilders
+                .get("/shopping-lists/")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(new ShoppingListCreationRequest(shoppingListName)))
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated())
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.shoppingListName").value(shoppingListName))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.uuid").exists());
+        mvc.perform( MockMvcRequestBuilders
+                .get("/shopping-lists/{id}", 1)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.employeeId").value(1));
+    }
     public static String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
